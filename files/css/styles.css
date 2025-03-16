@@ -1,0 +1,341 @@
+html,
+body {
+    font-size: smaller;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.main-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.sidebar {
+    width: 350px;
+    height: 100%;
+    overflow-y: auto;
+    padding: 15px;
+    background-color: #f8f9fa;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.map-container {
+    flex: 1;
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.airport-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+
+.airport-item:hover {
+    background-color: #e9ecef;
+}
+
+.airport-list {
+    margin-top: 15px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    display: none;
+}
+
+.airport-code {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 100%;
+    padding: 0;
+    margin-top: 2px !important;
+    border-radius: 0.25rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    white-space: normal;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background-color: #e9ecef;
+}
+
+.dropdown-item .airport-code {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #0d6efd;
+}
+
+/* Ensure search icon appears properly */
+.input-group-text .bi-search {
+    font-size: 1rem;
+}
+
+/* Ensure origin icon appears properly */
+.input-group-text .bi-geo-alt-fill {
+    font-size: 1rem;
+    color: #198754; /* Bootstrap 'success' color for green emphasis */
+}
+
+/* From label styling */
+.input-group-text.from-label {
+    /* font-weight: bold; */
+    background-color: #127848; /* Bootstrap 'success' color for green emphasis */
+    color: white;
+    min-width: 50px;
+    width: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+/* To label styling */
+.input-group-text.to-label {
+    /* font-weight: bold; */
+    background-color: #ae0121;
+    color: white;
+    min-width: 50px;
+    width: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Navaid label styling */
+.input-group-text.navaid-label {
+    background-color: #6f42c1; /* Bootstrap purple for navaids */
+    color: white;
+    min-width: 50px;
+    width: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Route airport label styling */
+.input-group-text.route-label {
+    background-color: #6c757d; /* Bootstrap gray for route airports */
+    color: white;
+    min-width: 50px;
+    width: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Waypoint label styling */
+.input-group-text.waypoint-label {
+    background-color: #fd7e14; /* Bootstrap orange for waypoints */
+    color: white;
+    min-width: 50px;
+    width: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+#selectedAirportInfo {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for loading state */
+.dropdown-item.text-center {
+    padding: 15px;
+}
+
+.spinner-border {
+    margin-right: 10px;
+}
+
+/* Airport marker styling */
+.airport-marker .marker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.airport-marker.departure .marker-container {
+    transform: rotate(-45deg);
+}
+
+.airport-marker.destination .marker-container {
+    transform: rotate(45deg);
+}
+
+.airport-marker i {
+    font-size: 15px;
+}
+
+/* Navaid marker styling */
+.navaid-marker .marker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    background-color: #6f42c1; /* Purple for navaids */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.navaid-marker i {
+    font-size: 15px;
+}
+
+/* Waypoint marker styling */
+.waypoint-marker .marker-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    color: white;
+    background-color: #fd7e14; /* Orange for waypoints */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.waypoint-marker i {
+    font-size: 15px;
+}
+
+/* Flight path styling */
+.flight-path {
+    /* Add an animated dash effect */
+    stroke-dasharray: 8, 8;
+    animation: dash 30s linear infinite;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -1000;
+    }
+}
+
+/* Flight direction arrow */
+.flight-direction-arrow {
+    color: #fd0d39;
+    font-size: 20px;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+}
+
+.flight-direction-arrow i {
+    display: block;
+}
+
+/* Flight details card styling */
+.flight-route {
+    position: relative;
+    padding: 10px 0;
+}
+
+.airport-badge {
+    background-color: #f8f9fa;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.from-airport {
+    border: 2px solid #198754;
+    color: #198754;
+}
+
+.to-airport {
+    border: 2px solid #0d6efd;
+    color: #0d6efd;
+}
+
+.flight-line {
+    flex-grow: 1;
+    height: 2px;
+    background: linear-gradient(to right, #198754, #0d6efd);
+    margin: 0 10px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flight-line i {
+    background-color: white;
+    padding: 5px;
+    color: #0d6efd;
+    transform: rotate(90deg);
+    font-size: 1.2rem;
+}
+
+.flight-line i.flight-icon {
+    background-color: white;
+    padding: 5px;
+    color: #0d6efd;
+    transform: rotate(90deg);
+    font-size: 1.2rem;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    animation: flight-motion 3s infinite linear;
+}
+
+@keyframes flight-motion {
+    0% {
+        transform: translateY(-3px) rotate(90deg);
+    }
+    50% {
+        transform: translateY(3px) rotate(90deg);
+    }
+    100% {
+        transform: translateY(-3px) rotate(90deg);
+    }
+}
+
+.flight-info {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Updated flight details card styling */
+#flightDetailsCard .card-body {
+    padding: 12px 15px;
+}
+
+#flightDistance {
+    font-size: 1.1rem;
+}
+
+#copyDistanceBtn:hover {
+    background-color: #f8f9fa;
+}
+
+#copyDistanceBtn.btn-success {
+    color: white;
+}
