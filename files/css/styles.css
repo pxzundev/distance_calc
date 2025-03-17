@@ -14,7 +14,7 @@ body {
 }
 
 .sidebar {
-    width: 350px;
+    width: 450px;
     height: 100%;
     overflow-y: auto;
     padding: 15px;
@@ -119,8 +119,8 @@ body {
 
 /* Navaid label styling */
 .input-group-text.navaid-label {
-    background-color: #6f42c1; /* Bootstrap purple for navaids */
-    color: white;
+    /* background-color: #6f42c1;
+    color: white; */
     min-width: 50px;
     width: 50px;
     justify-content: center;
@@ -129,8 +129,8 @@ body {
 
 /* Route airport label styling */
 .input-group-text.route-label {
-    background-color: #6c757d; /* Bootstrap gray for route airports */
-    color: white;
+    /* background-color: #6c757d;
+    color: white; */
     min-width: 50px;
     width: 50px;
     justify-content: center;
@@ -139,8 +139,18 @@ body {
 
 /* Waypoint label styling */
 .input-group-text.waypoint-label {
-    background-color: #fd7e14; /* Bootstrap orange for waypoints */
-    color: white;
+    /* background-color: #fd7e14; 
+    color: white; */
+    min-width: 50px;
+    width: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Combined label styling */
+.input-group-text.combined-label {
+    /* background-color: #0643c5; 
+    color: white; */
     min-width: 50px;
     width: 50px;
     justify-content: center;
@@ -219,7 +229,7 @@ body {
 }
 
 .waypoint-marker i {
-    font-size: 15px;
+    font-size: 25px;
 }
 
 /* Flight path styling */
@@ -329,13 +339,113 @@ body {
 }
 
 #flightDistance {
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
-#copyDistanceBtn:hover {
+/* #copyDistanceBtn:hover {
     background-color: #f8f9fa;
-}
+} */
 
 #copyDistanceBtn.btn-success {
     color: white;
+}
+
+/* Input clear button positioning */
+.input-group {
+    position: relative;
+}
+
+.input-clear-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    display: none;  /* Hidden by default */
+}
+
+/* Adjust positioning for inputs with add-button span */
+.input-group:has(.add-button) .input-clear-button {
+    right: 50px; /* Adjust this value based on your add-button width */
+}
+
+/* Show clear button when input has content */
+.form-control:not([value=""]) ~ .input-clear-button,
+.form-control:focus ~ .input-clear-button {
+    display: block;
+}
+
+/* Input clear button positioning - improved for all fields */
+.input-group {
+    position: relative;
+}
+
+.input-clear-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0;
+    display: none;  /* Hidden by default */
+}
+
+/* Specific positioning for route airport search (with add button) */
+.input-group:has(#routeAirportSearch) .input-clear-button {
+    right: 50px; /* Account for the "+" buttons */
+}
+
+/* Fallback for browsers that don't support :has() */
+#clearRouteAirportBtn {
+    right: 50px;
+}
+
+/* Show clear button when input has content or is focused */
+.form-control:not([value=""]) ~ .input-clear-button,
+.form-control:focus ~ .input-clear-button {
+    display: block;
+}
+
+/* Additional selector to ensure cross-browser compatibility */
+.form-control[value]:not([value=""]) ~ .input-clear-button {
+    display: block;
+}
+
+/* Also ensure buttons appear on hover of input group for better usability */
+.input-group:hover .input-clear-button {
+    display: block;
+}
+
+/* Flight details card styling */
+#flightDetailsCard {
+    min-height: 73px; /* Set a fixed minimum height based on the content height */
+}
+
+#flightDetailsCard.empty .flight-details-content {
+    display: none;
+}
+
+#flightDetailsCard.empty .flight-details-placeholder {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 37px; /* Match height of the content */
+}
+
+#flightDetailsCard .card {
+    transition: background-color 0.2s ease;
+}
+
+#flightDetailsCard.empty .card {
+    background-color: #f8f9fa;
+    border: 1px dashed #dee2e6;
 }

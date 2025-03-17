@@ -23,7 +23,13 @@
 <body>
     <div class="main-container">
         <div class="sidebar">
-            <h5 class="mb-4">Great Circle Distance</h5>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Great Circle Distance</h5>
+                <button id="clearDistanceBtn" class="btn btn-sm btn-outline-secondary"
+                    title="Clear distance calculation" style="border: none;">
+                    Clear
+                </button>
+            </div>
 
             <div class="search-container">
                 <!-- From (Departure) Airport Search -->
@@ -33,6 +39,10 @@
                         <input type="text" class="form-control dropdown-toggle" id="departureAirportSearch"
                             placeholder="Loading airports..." aria-label="Search departure airport" autocomplete="off"
                             data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                        <button class="input-clear-button" type="button" id="clearDepartureAirportBtn"
+                            title="Clear search">
+                            <i class="bi bi-x"></i>
+                        </button>
                         <ul class="dropdown-menu w-100" id="departureAirportDropdown">
                             <!-- Dropdown items will be populated by JavaScript -->
                             <li class="dropdown-item text-center">
@@ -52,6 +62,10 @@
                         <input type="text" class="form-control dropdown-toggle" id="destinationAirportSearch"
                             placeholder="Search destination airport..." aria-label="Search destination airport"
                             autocomplete="off" data-bs-toggle="dropdown" aria-expanded="false">
+                        <button class="input-clear-button" type="button" id="clearDestinationAirportBtn"
+                            title="Clear search">
+                            <i class="bi bi-x"></i>
+                        </button>
                         <ul class="dropdown-menu w-100" id="destinationAirportDropdown">
                             <!-- Dropdown items will be populated by JavaScript -->
                         </ul>
@@ -60,26 +74,34 @@
             </div>
 
             <!-- Flight Details Card (Will show when both airports are selected) -->
-            <div id="flightDetailsCard" class="mt-4 d-none">
+            <div id="flightDetailsCard" class="mt-4">
                 <div class="card">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between">
-                            <span id="flightDistance">Calculating...</span>
-                            <button id="copyDistanceBtn" class="btn btn-sm btn-outline-primary"
-                                title="Copy to clipboard">
-                                <i class="bi bi-clipboard"></i>
-                            </button>
+                        <div class="flight-details-content">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span id="flightDistance">Select an airport pair</span>
+                                <button id="copyDistanceBtn" class="btn btn-sm btn-outline-secondary d-none" style="border: none;"
+                                    title="Copy to clipboard">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flight-details-placeholder text-muted text-center d-none">
+                            <i class="bi bi-arrows-angle-expand me-2"></i> Select departure and destination airports
                         </div>
                     </div>
                 </div>
             </div>
 
-            <hr>
+            
 
             <!-- duplicated from searchbox here -->
 
             <!-- Navaids Search -->
-            <h5 class="mb-3">Route Search</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Route Search</h5>
+                <!-- Button removed as requested -->
+            </div>
             <div class="dropdown w-100 mb-3">
                 <!-- Add airport input group -->
                 <div class="input-group mb-3">
@@ -87,6 +109,17 @@
                     <input type="text" class="form-control dropdown-toggle" id="routeAirportSearch"
                         placeholder="Search airport..." aria-label="Search route airport" autocomplete="off"
                         data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="input-clear-button" type="button" id="clearRouteAirportBtn" title="Clear search">
+                        <i class="bi bi-x"></i>
+                    </button>
+                    <!-- add span with buttons "+" -->
+                    <span class="p-1 input-group-text add-button" id="addAirportToTableButton">
+
+                        <button id="addAirportToTableBtn" class="btn btn-sm" title="Add to table">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </span>
+
                     <ul class="dropdown-menu w-100" id="routeAirportDropdown">
                         <!-- Dropdown items will be populated by JavaScript -->
                     </ul>
@@ -97,6 +130,16 @@
                     <input type="text" class="form-control dropdown-toggle" id="navaidSearch"
                         placeholder="Loading navaids..." aria-label="Search navaids" autocomplete="off"
                         data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                    <button class="input-clear-button" type="button" id="clearNavaidBtn" title="Clear search">
+                        <i class="bi bi-x"></i>
+                    </button>
+                    <!-- add span with buttons "+" -->
+                    <span class="p-1 input-group-text add-button" id="addNavaidsToTableButton">
+
+                        <button id="addNavaidsToTableBtn" class="btn btn-sm" title="Add to table">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </span>
                     <ul class="dropdown-menu w-100" id="navaidDropdown">
                         <li class="dropdown-item text-center">
                             <div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -113,6 +156,16 @@
                     <input type="text" class="form-control dropdown-toggle" id="waypointSearch"
                         placeholder="Loading waypoints..." aria-label="Search waypoints" autocomplete="off"
                         data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                    <button class="input-clear-button" type="button" id="clearWaypointBtn" title="Clear search">
+                        <i class="bi bi-x"></i>
+                    </button>
+                    <!-- add span with buttons "+" -->
+                    <span class="p-1 input-group-text add-button" id="addFixToTableButton">
+
+                        <button id="addFixToTableBtn" class="btn btn-sm" title="Add to table">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </span>
                     <ul class="dropdown-menu w-100" id="waypointDropdown">
                         <li class="dropdown-item text-center">
                             <div class="spinner-border spinner-border-sm text-primary" role="status">
@@ -122,7 +175,59 @@
                         </li>
                     </ul>
                 </div>
+
+                <!-- Combined search input group -->
+                <div class="input-group mt-3">
+                    <span class="input-group-text combined-label">ALL</span>
+                    <input type="text" class="form-control dropdown-toggle" id="combinedSearch"
+                        placeholder="Search all points..." aria-label="Search all points" autocomplete="off"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="input-clear-button" type="button" id="clearCombinedBtn" title="Clear search">
+                        <i class="bi bi-x"></i>
+                    </button>
+                    <!-- add span with buttons "+" -->
+                    <span class="p-1 input-group-text add-button" id="addPointToTableButton">
+
+                        <button id="addPointToTableBtn" class="btn btn-sm" title="Add to table">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </span>
+                    <ul class="dropdown-menu w-100" id="combinedDropdown">
+                        <!-- Dropdown items will be populated by JavaScript -->
+                    </ul>
+                </div>
+
             </div>
+            <br>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Route List</h5>
+                <!-- <button id="clearRouteBtn" class="btn btn-sm btn-outline-secondary" title="Clear route search">
+                    <i class="bi bi-trash"></i>
+                </button> -->
+                <button id="clearRouteListBtn" class="btn btn-sm btn-outline-secondary"
+                    title="Clear route search" style="border: none;">
+                    Clear
+                </button>
+            </div>
+
+            <!-- create a 4-column table with headers: "#", "Point Name", "Distance from Previous Point", "Total Distance" -->
+            <table class="table table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Point Name</th>
+                        <th scope="col" style="vertical-align: bottom; line-height: 1.2; white-space: normal;">Distance<br>from<br>Previous Point</th>
+                        <th scope="col" style="vertical-align: bottom; line-height: 1.2; white-space: normal;">Total<br>Accumulated<br>Distance</th>
+                    </tr>
+                </thead>
+                <tbody id="routeTableBody">
+                    <tr id="emptyRouteTableRow">
+                        <td colspan="4" class="text-center text-muted p-3">Add points to calculate distance</td>
+                    </tr>
+                    <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+                </table>
 
         </div>
 
@@ -138,6 +243,9 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <!-- Leaflet.PolylineDecorator plugin for arrowheads -->
+    <script src="https://unpkg.com/leaflet-polylinedecorator/dist/leaflet.polylineDecorator.js"></script>
 
     <!-- Custom JS -->
     <script src="files/js/main.js"></script>
