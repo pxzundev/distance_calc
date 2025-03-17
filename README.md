@@ -2,6 +2,10 @@
 
 This project is a web-based map application that calculates the great circle distance between two airports and allows users to search for routes, navaids, and waypoints. The application uses Bootstrap for styling and Leaflet for map functionalities.
 
+## Purpose
+
+This app was created to support billing of navigation charges by calculating flight distances based on provided flight plans.
+
 ## Features
 
 - Search for departure and destination airports.
